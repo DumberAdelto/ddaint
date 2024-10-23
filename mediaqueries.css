@@ -1,0 +1,9 @@
+@media screen and (max-width: 600px) {
+    .projectCard > h1 {
+        font-size: 28px !important;
+    }
+
+    #tapDisc {
+        display: block;
+    }
+}
