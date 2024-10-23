@@ -251,6 +251,17 @@ a {
     vertical-align: middle;
 }
 
+.footer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10%;
+}
+
+.footer1, .footer2, .footer3, .footer4 > h1, span, a {
+    font-size: calc(15px + 0.5vw);
+}
+
 /* pacman seperator */
 
 hr {
