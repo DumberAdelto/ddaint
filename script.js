@@ -5,13 +5,9 @@ let spacers = document.querySelectorAll(".spacer");
 
 document.addEventListener("DOMContentLoaded", (event) => {
     gsap.registerPlugin(
-        Flip,
         ScrollTrigger,
         ScrollToPlugin,
         TextPlugin,
-        RoughEase,
-        ExpoScaleEase,
-        SlowMo,
         CustomEase
     );
     const lenis = new Lenis();
