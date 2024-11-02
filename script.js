@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const lenis = new Lenis();
 
     lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add(time => lenis.raf(time * 1000));
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
 
     // Scroll function for anchor links
-    document.querySelectorAll(".scroll-to").forEach(span => {
+    document.querySelectorAll(".scroll-to").forEach((span) => {
         span.addEventListener("click", () => {
             const targetId = span.getAttribute("data-target");
             lenis.scrollTo(targetId);
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Adjust spacer heights for nav spacing
-    spacers.forEach(spacer => {
+    spacers.forEach((spacer) => {
         spacer.style.cssText = `height: ${navHeight}px; display: flex;`;
     });
 
