@@ -1,40 +1,37 @@
-let intro = document.querySelector(".intro");
-let logo = document.querySelector(".logo-header");
-let logoSpan = document.querySelectorAll(".logo");
-let spacers = document.querySelectorAll(".spacer");
+// Elements selection
+const intro = document.querySelector(".intro");
+const logoSpan = document.querySelectorAll(".logo");
+const spacers = document.querySelectorAll(".spacer");
+const navHeight = document.querySelector(".nav").offsetHeight;
 
-document.addEventListener("DOMContentLoaded", (event) => {
-    gsap.registerPlugin(
-        ScrollTrigger,
-        ScrollToPlugin,
-        TextPlugin,
-        CustomEase
-    );
+// Initialize GSAP plugins and Lenis scroll
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, TextPlugin, CustomEase);
     const lenis = new Lenis();
 
-    function scrollTo(destination) {
-        lenis.scrollTo(destination);
-    }
-
-    lenis.on("scroll", (e) => {
-        console.log(e);
-    });
     lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
-    });
+    gsap.ticker.add(time => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
 
-    // SPLASH
-    console.log("Initializing splash animation...");
-    setTimeout(() => {
-        console.log("Starting splash animation...");
+    // Scroll function for anchor links
+    document.querySelectorAll(".scroll-to").forEach(span => {
+        span.addEventListener("click", () => {
+            const targetId = span.getAttribute("data-target");
+            lenis.scrollTo(targetId);
+        });
+    });
+
+    // Adjust spacer heights for nav spacing
+    spacers.forEach(spacer => {
+        spacer.style.cssText = `height: ${navHeight}px; display: flex;`;
+    });
+
+    // Splash animation
+    const splashAnimation = () => {
         document.body.classList.add("no-scroll");
+
         logoSpan.forEach((span, idx) => {
-            setTimeout(() => {
-                span.classList.add("active");
-                console.log(`Span ${idx} active`); // Log active state
-            }, (idx + 1) * 350);
+            setTimeout(() => span.classList.add("active"), (idx + 1) * 350);
         });
 
         setTimeout(() => {
@@ -42,32 +39,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 setTimeout(() => {
                     span.classList.remove("active");
                     span.classList.add("fade");
-                    console.log(`Span ${idx} fading`); // Log fading state
                 }, (idx + 1) * 50);
             });
         }, 2000);
 
         setTimeout(() => {
             intro.style.top = "-150vh";
-            console.log("Hiding intro..."); // Log hiding intro
-            setTimeout(() => {
-                document.body.classList.remove("no-scroll");
-                console.log("No-scroll class removed."); // Log scroll enabled
-            }, 1000);
+            setTimeout(() => document.body.classList.remove("no-scroll"), 1000);
         }, 2300);
-    }, 0); // Ensure this runs immediately on page load
+    };
 
-    spacers.forEach((spacer) => {
-        spacer.style.height =
-            document.querySelector(".nav").offsetHeight + "px";
-        spacer.style.display = "flex";
-    });
-
-    // Add click event listeners to the spans
-    document.querySelectorAll(".scroll-to").forEach((span) => {
-        span.addEventListener("click", () => {
-            const targetId = span.getAttribute("data-target");
-            scrollTo(targetId); // Use the scrollTo function
-        });
-    });
+    // Run splash animation immediately on load
+    splashAnimation();
 });
